@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LinkedIn Job Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo-area">
+        <span class="icon-sparkles">✨</span>
+        <h1>LinkedIn Job Assistant</h1>
+      </div>
+      <span class="badge">Spring AI</span>
+    </header>
+
+    <!-- Main Content -->
+    <main class="app-main">
+      <!-- Section 1: Resume Selector -->
+      <section class="card glass">
+        <div class="card-header">
+          <span class="step-number">1</span>
+          <h2>Select Your Resume</h2>
+        </div>
+        <div class="form-group row-flex" style="display: flex; gap: 8px; align-items: center; width: 100%;">
+          <select id="resume-select" class="custom-select" style="flex: 1;">
+            <option value="">-- Choose saved resume --</option>
+          </select>
+          <button id="btn-delete-resume" class="btn btn-danger btn-icon" title="Delete selected resume" disabled>
+            🗑️
+          </button>
+        </div>
+        <div class="upload-area" id="drop-zone">
+          <input type="file" id="resume-file" accept="application/pdf" hidden />
+          <p id="upload-status">Drag & drop resume PDF or <span>Browse</span></p>
+        </div>
+      </section>
+
+      <!-- Section 2: LinkedIn Job Details -->
+      <section class="card glass">
+        <div class="card-header">
+          <span class="step-number">2</span>
+          <h2>LinkedIn Job Info</h2>
+        </div>
+        <div id="job-info-card" class="job-info-card empty">
+          <p class="placeholder-text">Navigate to a LinkedIn Job page & click below</p>
+          <div class="scraped-details" id="scraped-details" style="display: none; width: 100%;">
+            <div class="input-group" style="display: flex; flex-direction: column; align-items: flex-start; width: 100%;">
+              <label for="input-title" style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 4px;">Job Title:</label>
+              <input type="text" id="input-title" class="custom-input" />
+            </div>
+            <div class="input-group" style="display: flex; flex-direction: column; align-items: flex-start; width: 100%; margin-top: 8px;">
+              <label for="input-company" style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 4px;">Company:</label>
+              <input type="text" id="input-company" class="custom-input" />
+            </div>
+            <div class="input-group" style="display: flex; flex-direction: column; align-items: flex-start; width: 100%; margin-top: 8px;">
+              <label for="input-description" style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 4px;">Job Description:</label>
+              <textarea id="input-description" class="custom-input" style="height: 100px; resize: vertical; font-size: 0.8rem; line-height: 1.4;" placeholder="Paste job description text here if empty..."></textarea>
+            </div>
+          </div>
+        </div>
+        <button id="btn-extract" class="btn btn-secondary">
+          <span>🔍</span> Extract from Page
+        </button>
+      </section>
+
+      <!-- Section 3: Generation Settings -->
+      <section class="card glass">
+        <div class="card-header">
+          <span class="step-number">3</span>
+          <h2>Generation Settings</h2>
+        </div>
+        <div class="form-group row">
+          <label for="tone-select">Outreach Tone:</label>
+          <select id="tone-select" class="custom-select small">
+            <option value="Professional" selected>👔 Professional</option>
+            <option value="Confident">🔥 Confident</option>
+            <option value="Enthusiastic">💡 Enthusiastic</option>
+            <option value="Casual">☕ Casual</option>
+          </select>
+        </div>
+        <button id="btn-generate" class="btn btn-primary" disabled>
+          Generate Outreach Documents
+        </button>
+        <p id="generation-warning" class="warning-text" style="display: none; text-align: center; font-size: 0.75rem; color: #f87171; margin-top: 8px;"></p>
+      </section>
+
+      <!-- Loading State -->
+      <div id="loader-container" class="loader-container" style="display: none;">
+        <div class="spinner"></div>
+        <p>Creating cover letter and email drafts...</p>
+      </div>
+
+      <!-- Section 4: Output Viewer -->
+      <section id="output-section" class="card glass output-card" style="display: none;">
+        <div class="tab-header">
+          <button class="tab-btn active" data-tab="tab-cover-letter">Cover Letter</button>
+          <button class="tab-btn" data-tab="tab-email">Cold Email</button>
+        </div>
+        <div class="tab-content">
+          <div id="tab-cover-letter" class="tab-pane active">
+            <textarea id="txt-cover-letter" class="output-textarea"></textarea>
+            <div class="action-bar">
+              <button class="btn btn-small btn-copy" data-target="txt-cover-letter">
+                Copy Cover Letter
+              </button>
+            </div>
+          </div>
+          <div id="tab-email" class="tab-pane">
+            <textarea id="txt-email" class="output-textarea"></textarea>
+            <div class="action-bar">
+              <button class="btn btn-small btn-copy" data-target="txt-email">
+                Copy Email Body
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Global Toast Alert -->
+    <div id="toast" class="toast">Copied to clipboard!</div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

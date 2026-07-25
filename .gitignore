@@ -1,0 +1,25 @@
+# Spring Boot Build directory
+backend/target/
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Maven wrapper and log files
+.mvn/
+*.log
+*.log.*
+
+# IDE / System configurations
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Workspace / Metadata files
+.metadata/
+.system_generated/
+/scratch/
+/brain/

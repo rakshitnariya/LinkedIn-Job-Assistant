@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "LinkedIn Job Assistant & Outreach Generator",
+  "version": "1.0.0",
+  "description": "Scrapes LinkedIn jobs, uploads resumes, and generates customized cover letters and emails.",
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Open Job Assistant"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.linkedin.com/jobs/*",
+        "https://*.linkedin.com/jobs/view/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "host_permissions": [
+    "http://localhost:8080/*",
+    "http://localhost:8081/*"
+  ]
+}
